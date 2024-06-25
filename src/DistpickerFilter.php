@@ -7,6 +7,9 @@ use Encore\Admin\Grid\Filter\AbstractFilter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
+/**
+ * @method static nameForValue() See Encore\ChinaDistpicker\FilterPresenter::nameForValue()
+ */
 class DistpickerFilter extends AbstractFilter
 {
     /**

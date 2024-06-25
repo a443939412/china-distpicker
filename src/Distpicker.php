@@ -44,6 +44,10 @@ class Distpicker extends Field
             $this->placeholder = array_combine($this->columnKeys, $column);
         }
 
+        foreach ($this->column as &$column) {
+            $column = $this->formatColumn($column);
+        }
+
         $this->label = empty($arguments) ? '地区选择' : current($arguments);
     }
 
@@ -81,11 +85,26 @@ class Distpicker extends Field
     }
 
     /**
+     * 设定选择框的值类型为省市区名称（默认为编码）
+     * @return $this
+     * @note 也可以用过js脚本直接修改DOM属性值类实现
+     * ```
+     * Admin::script('$("[data-value-type=code]").attr("data-value-type", "name");');
+     * ```
+     */
+    public function nameForValue()
+    {
+        $this->attribute('data-value-type', 'name');
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function render()
     {
-        $this->attribute('data-value-type', 'code');
+        // $this->attribute('data-value-type', 'code');
 
         $province = old($this->column['province'], Arr::get($this->value(), 'province')) ?: Arr::get($this->placeholder, 'province');
         $city     = old($this->column['city'],     Arr::get($this->value(), 'city'))     ?: Arr::get($this->placeholder, 'city');
